@@ -1,1 +1,342 @@
 @import "tailwindcss";
+
+/* === VARIABLES DE COLOR === */
+:root {
+  --color-primary: #f59e0b;
+  --color-primary-dark: #d97706; 
+  --color-primary-darker: #ea580c; 
+  --color-primary-light: #fbbf24; 
+
+  --color-bg-primary: #f8fafc; 
+  --color-bg-secondary: #f1f5f9; 
+  --color-bg-tertiary: #e2e8f0; 
+
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #334155; 
+  --color-text-tertiary: #64748b; 
+  --color-text-light: #94a3b8;
+
+  --color-border: #cbd5e1; 
+  --color-border-light: #e2e8f0; 
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --shadow-amber: 0 10px 15px -3px rgba(245, 158, 11, 0.3);
+}
+
+/* ============================================
+   TABLAS
+   ============================================ */
+
+/* Contenedor de tabla */
+.table-container {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border-light);
+  overflow: hidden;
+}
+
+/* Header de la tabla */
+.table-header {
+  background: linear-gradient(to right, #005fa3, #004080, #001f40);
+  padding: 1rem 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.table-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom right, rgba(100, 116, 139, 0.1), rgba(71, 85, 105, 0.1));
+}
+
+.table-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+  position: relative;
+  z-index: 0;
+}
+
+/* Tabla */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table thead {
+  background: linear-gradient(to bottom, var(--color-bg-secondary), var(--color-bg-tertiary));
+}
+
+.table th {
+  padding: 1rem 1.5rem;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.table td {
+  padding: 1rem 1.5rem;
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.table tbody tr:hover {
+  background-color: var(--color-bg-primary);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Alineación de columnas */
+.table-cell-center {
+  text-align: center;
+}
+
+.table-cell-right {
+  text-align: right;
+}
+
+/* Badges en tablas */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-success {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.badge-warning {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.badge-danger {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.badge-info {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.badge-primary {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+/* Botones de acción en tablas */
+.table-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.btn-icon {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border-radius: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 1px solid var(--color-border);
+  background: white;
+  color: var(--color-text-secondary);
+}
+
+.btn-icon:hover {
+  background: var(--color-bg-primary);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn-icon-primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  color: white;
+  border: none;
+}
+
+.btn-icon-primary:hover {
+  box-shadow: var(--shadow-amber);
+  transform: scale(1.1);
+}
+
+/* ============================================
+   MEDIA QUERIES
+   ============================================ */
+
+/* Tabla responsive */
+@media (max-width: 768px) {
+  .table-container {
+    overflow-x: auto;
+  }
+  
+  .table {
+    min-width: 600px;
+  }
+}
+
+/* Corrige superposición y define estilo del Link */
+.table-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom right, rgba(100, 116, 139, 0.1), rgba(71, 85, 105, 0.1));
+  pointer-events: none; /* No bloquea clics */
+}
+
+.table-header * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Botón principal (Link) */
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  box-shadow: var(--shadow-amber);
+  transform: scale(1.05);
+  background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary-darker));
+}
+
+/* ============================================
+   Forms
+   ============================================ */
+/* Contenedor general de formulario con separación vertical */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* space-y-6 */
+}
+
+/* Contenedor de cada campo individual */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* space-y-2 */
+}
+
+/* Etiqueta de campo */
+.form-label {
+  display: block;
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 600; /* font-semibold */
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+/* Indicador de campo obligatorio */
+.required {
+  color: var(--color-primary);
+  margin-left: 0.25rem; /* ml-1 */
+}
+
+/* Contenedor para icono dentro del input */
+.input-icon-wrapper {
+  position: relative;
+}
+
+.input-icon-wrapper svg {
+  position: absolute;
+  inset-y: 0;
+  left: 1rem; /* pl-4 */
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  height: 1.25rem; /* h-5 */
+  width: 1.25rem; /* w-5 */
+  color: var(--color-text-light);
+}
+
+/* Input estándar */
+.form-input {
+  width: 100%;
+  padding: 0.875rem 1rem 0.875rem 3rem; /* py-3.5, pl-12, pr-4 */
+  border-width: 2px;
+  border-radius: 1rem; /* rounded-xl */
+  transition: all 0.2s;
+  outline: none;
+  background-color: white;
+  color: var(--color-text-primary);
+  placeholder-color: var(--color-text-light);
+}
+
+/* Input en estado normal */
+.form-input-normal {
+  border-color: var(--color-border);
+}
+
+.form-input-normal:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 0.25rem var(--color-primary-light)33; /* focus:ring */
+}
+
+/* Input con error */
+.form-input-error {
+  border-color: #fca5a5; /* red-300 */
+}
+
+.form-input-error:focus {
+  border-color: #ef4444; /* red-500 */
+  box-shadow: 0 0 0 0.25rem #fee2e2; /* red-100 ring */
+}
+
+/* Mensaje de error */
+.error-message-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+
+/* Texto de ayuda o descripción */
+.help-text {
+  font-size: 0.75rem; /* text-xs */
+  color: var(--color-text-tertiary);
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.help-text svg {
+  width: 1rem; /* w-4 */
+  height: 1rem; /* h-4 */
+}

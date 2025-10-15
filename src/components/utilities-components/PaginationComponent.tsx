@@ -36,7 +36,7 @@ export default function PaginationComponent({ currentPage, totalPages, onPageCha
     return pages;
   };
 
-  if (totalPages <= 1) return null;
+  if (totalPages <1) return null;
 
   return (
     <div className="m-4">

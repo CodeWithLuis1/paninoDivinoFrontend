@@ -1,4 +1,4 @@
-import { HomeIcon, UserCog, User, Truck, CircleUserRound,Container  } from "lucide-react";
+import { HomeIcon, UserCog, User, HandPlatter } from "lucide-react";
 import NavLinkComponent from "@/components/utilities-components/NavLinkComponent.js";
 
 export default function Navegation() {
@@ -15,17 +15,8 @@ export default function Navegation() {
         <NavLinkComponent url="/rol" text="Roles">
           <UserCog />
         </NavLinkComponent>
-
-        <NavLinkComponent url="/driver" text="Piloto">
-          <CircleUserRound />
-        </NavLinkComponent>
-
-        <NavLinkComponent url="/carriers" text="Transportista">
-          <Truck />
-        </NavLinkComponent>
-
-        <NavLinkComponent url="/container" text="Contenedor">
-          <Container  />
+        <NavLinkComponent url="/order/create" text="Pedidos">
+          <HandPlatter />
         </NavLinkComponent>
       </>
     </div>

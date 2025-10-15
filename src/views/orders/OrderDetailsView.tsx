@@ -2,8 +2,6 @@
 import { Navigate,useNavigate,useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getOrderById } from "@/api/OrdersAPI.js";
-import AddTaskModal from '../../components/tasks/AddTaskModal.js'
-
 export default function OrderDetailsView() {
 
   const navigate = useNavigate()
@@ -35,7 +33,6 @@ export default function OrderDetailsView() {
         Agregar Tarea
       </button>
 
-      <AddTaskModal/>
       </>
   )
 }
