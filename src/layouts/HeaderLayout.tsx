@@ -1,5 +1,5 @@
 import { Menu, X, Bell, Settings, User, TrendingUp, UserCircle, LogOut, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 type HeaderProps = {
   sidebarOpen: boolean;
@@ -15,9 +15,33 @@ export default function Header({
   setMobileMenuOpen,
 }: HeaderProps) {
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
+
+  // ✅ Cerrar dropdown al hacer clic fuera o presionar ESC
+  useEffect(() => {
+    const handlePointerOutside = (e: MouseEvent | TouchEvent) => {
+      if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
+        setProfileDropdownOpen(false);
+      }
+    };
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setProfileDropdownOpen(false);
+    };
+
+    document.addEventListener("mousedown", handlePointerOutside);
+    document.addEventListener("touchstart", handlePointerOutside, { passive: true });
+    document.addEventListener("keydown", handleKey);
+
+    return () => {
+      document.removeEventListener("mousedown", handlePointerOutside);
+      document.removeEventListener("touchstart", handlePointerOutside);
+      document.removeEventListener("keydown", handleKey);
+    };
+  }, []);
 
   const handleLogout = () => {
     console.log("Cerrando sesión...");
+    setProfileDropdownOpen(false);
   };
 
   const handleProfile = () => {
@@ -50,7 +74,8 @@ export default function Header({
             </div>
             <div className="hidden sm:block">
               <h1 className="text-lg font-bold text-white tracking-tight">
-                Panino Divino              </h1>
+                Panino Divino
+              </h1>
               <p className="text-xs text-slate-400 font-medium">
                 “Donde el pan cruje y el sabor conquista.”
               </p>
@@ -70,10 +95,12 @@ export default function Header({
           </button>
 
           {/* Dropdown Perfil */}
-          <div className="relative ml-2 pl-2 border-l border-slate-700">
+          <div className="relative ml-2 pl-2 border-l border-slate-700" ref={profileRef}>
             <button
-              onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+              onClick={() => setProfileDropdownOpen((v) => !v)}
               className="flex items-center gap-3 hover:bg-slate-700/50 rounded-lg pl-3 pr-2 py-1.5 transition-all group"
+              aria-haspopup="menu"
+              aria-expanded={profileDropdownOpen}
             >
               <div className="hidden lg:block text-right">
                 <p className="text-sm font-semibold text-slate-200 group-hover:text-white transition-colors">
@@ -89,7 +116,10 @@ export default function Header({
             </button>
 
             {profileDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border border-slate-200 py-2 animate-in fade-in slide-in-from-top-2 duration-200">
+              <div
+                className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border border-slate-200 py-2 animate-in fade-in slide-in-from-top-2 duration-200"
+                role="menu"
+              >
                 <div className="px-4 py-3 border-b border-slate-100">
                   <p className="text-sm font-semibold text-slate-900">
                     Juan Pérez
