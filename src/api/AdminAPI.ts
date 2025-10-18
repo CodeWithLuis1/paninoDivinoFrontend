@@ -2,6 +2,7 @@ import api from "@/lib/axios.js";
 import { isAxiosError } from "axios";
 import { getRoleSchema, createUserSchema } from "@/schemas/typesAdmin.js";
 import type { CreateRolFormData, createUserFormData, GetRolesResponse } from "@/schemas/typesAdmin.js";
+import {getUserSchema} from "@/schemas/typesAdmin.js";
 
 // ✅ Crear rol
 export async function createRoleAPI(formData: CreateRolFormData) {
@@ -42,7 +43,7 @@ export async function getRoleAPI(page: number = 1): Promise<GetRolesResponse> {
 export async function createUserAPI(formData: createUserFormData) {
   try {
     const validatedData = createUserSchema.parse(formData);
-    const { data } = await api.post("/register", validatedData);
+    const { data } = await api.post("/users"  , validatedData);
     return data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
@@ -55,8 +56,11 @@ export async function createUserAPI(formData: createUserFormData) {
 // ✅ Obtener usuario 
 export async function getUserAPI() {
   try {
-    const { data } = await api.get("/register");
-    const parsed = getRoleSchema.safeParse(data);
+    const { data } = await api.get("/users");
+    console.log("Datos recibidos de getUserAPI:", data);
+
+    const parsed = getUserSchema.safeParse(data);
+
     if (!parsed.success) {
       console.error("Error de validación:", parsed.error.format());
       throw new Error("Los datos recibidos del servidor no son válidos");
@@ -67,13 +71,12 @@ export async function getUserAPI() {
     if (isAxiosError(error) && error.response) {
       console.error("Error del servidor:", error.response.data);
       throw new Error(
-        error.response.data.error || "Error al obtener los roles"
+        error.response.data.error || "Error al obtener los usuarios"
       );
     }
     throw error;
   }
 }
-
 
 // ✅ Editar rol
 export async function updateRoleAPI(id: number, formData: CreateRolFormData) {

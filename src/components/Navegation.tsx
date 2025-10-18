@@ -1,5 +1,5 @@
 // src/components/layout/Navegation.tsx
-import { HomeIcon, UserCog, User, HandPlatter } from "lucide-react";
+import { HomeIcon, UserCog, User, HandPlatter,ClipboardList  } from "lucide-react";
 import NavLinkComponent from "@/components/utilities-components/NavLinkComponent.js";
 
 export default function Navegation() {
@@ -20,6 +20,10 @@ export default function Navegation() {
       {/* 🔁 Antes: url="/order/create" */}
       <NavLinkComponent url="/pedidos" text="Pedidos">
         <HandPlatter />
+      </NavLinkComponent>
+
+      <NavLinkComponent url="/category" text="Categorías">
+        <ClipboardList />
       </NavLinkComponent>
     </div>
   );

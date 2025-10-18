@@ -48,3 +48,33 @@ export const createUserSchema = z.object({
 });
 
 export type createUserFormData = z.infer<typeof createUserSchema>
+
+// ===========================
+// GET USERS
+// ===========================
+export const userRoleSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+});
+
+export const userSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  username: z.string(),
+  password: z.string(),
+  roleId: z.number(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  role: userRoleSchema,
+});
+
+export const getUserSchema = z.object({
+  statusCode: z.number(),
+  data: z.array(userSchema),
+  total: z.number(),
+  limit: z.number(),
+  offset: z.number(),
+});
+
+export type User = z.infer<typeof userSchema>;
+export type GetUsersResponse = z.infer<typeof getUserSchema>;
