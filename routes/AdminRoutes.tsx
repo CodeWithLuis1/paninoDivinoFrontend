@@ -18,24 +18,24 @@ const routes = [
   { path: "/user/create", component: lazy(() => import("@/views/adminPanel/CreateUserView.js")), roles: [] },
 
   // ======== 📦 Pedidos (lista + editor) ========
-  // Lista de pedidos
   { path: "/pedidos", component: lazy(() => import("@/pages/PedidosPage.jsx")), roles: [] },
-  // Editor por ID (reanudación desde tabla)
   { path: "/pedidos/:id", component: lazy(() => import("@/pages/pedidos/PedidoEditor.jsx")), roles: [] },
-  // Atajo directo para crear un pedido (editor sin ID)
   { path: "/order/create", component: lazy(() => import("@/pages/pedidos/PedidoEditor.jsx")), roles: [] },
 
-  //Para generar los cobros
+  // ======== 💳 Cobros ========
   { path: "/cobros/:id", component: lazy(() => import("@/pages/cobros/CobroPage.jsx")), roles: [] },
 
-  
-  // (Opcional/legacy) Vistas antiguas si aún las necesitas
+  // (Opcional/legacy)
   { path: "/order/:orderId", component: lazy(() => import("@/views/orders/OrderDetailsView.js")), roles: [] },
   { path: "/order/:orderId/edit", component: lazy(() => import("@/views/orders/EditOrderView.js")), roles: [] },
 
-  // ======== 🛍️ Gestión de Productos ========
+  // ======== 🛍️ Productos ========
   { path: "/products", component: lazy(() => import("@/components/products/ProductsTable.js")), roles: [] },
   { path: "/products/create", component: lazy(() => import("@/components/products/ProductForm.js")), roles: [] },
+
+  // ======== 🧰 Inventario (nuevo) ========
+  // Asegúrate de que el componente por defecto esté exportado en "@/pages/inventario/Inventario.jsx"
+  { path: "/inventario", component: lazy(() => import("@/pages/inventario/Inventario.jsx")), roles: [] },
 ];
 
 export default function AdminRoutes() {
