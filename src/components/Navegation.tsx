@@ -1,3 +1,4 @@
+// src/components/layout/Navegation.tsx
 import { HomeIcon, UserCog, User, HandPlatter } from "lucide-react";
 import NavLinkComponent from "@/components/utilities-components/NavLinkComponent.js";
 
@@ -7,18 +8,19 @@ export default function Navegation() {
       <NavLinkComponent url="/dashboard" text="">
         <HomeIcon />
       </NavLinkComponent>
-      <>
-        <NavLinkComponent url="/user" text="Usuarios">
-          <User />
-        </NavLinkComponent>
 
-        <NavLinkComponent url="/rol" text="Roles">
-          <UserCog />
-        </NavLinkComponent>
-        <NavLinkComponent url="/order/create" text="Pedidos">
-          <HandPlatter />
-        </NavLinkComponent>
-      </>
+      <NavLinkComponent url="/user" text="Usuarios">
+        <User />
+      </NavLinkComponent>
+
+      <NavLinkComponent url="/rol" text="Roles">
+        <UserCog />
+      </NavLinkComponent>
+
+      {/* 🔁 Antes: url="/order/create" */}
+      <NavLinkComponent url="/pedidos" text="Pedidos">
+        <HandPlatter />
+      </NavLinkComponent>
     </div>
   );
 }
