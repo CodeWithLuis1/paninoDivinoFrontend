@@ -52,7 +52,8 @@
       "@/products/*": ["products/*"],
       "@/routes/*": ["routes/*"],
       "@/utilities-components/*": ["utilities-components/*"],
-      "@/auth/*": ["auth*"]
+      "@/auth/*": ["auth*"],
+      "@/hooks/*": ["hooks*"]
     }
   }
 }

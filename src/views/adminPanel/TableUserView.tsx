@@ -1,19 +1,22 @@
 import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import { getUserAPI } from "@/api/AdminAPI.js";
 import { Pencil, Trash2 } from "lucide-react";
+import PaginationComponent from "@/components/utilities-components/PaginationComponent.js";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 export default function UserTableView() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize] = useState(10);
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["users"],
-    queryFn: getUserAPI,
+    queryKey: ["users", currentPage, pageSize],
+    queryFn: () => getUserAPI(currentPage),
   });
-
+  const handlePageChange = (page: number) => setCurrentPage(page);
   if (isLoading) return <p>Cargando usuarios...</p>;
   if (isError) return <p>Error al cargar los datos.</p>;
-
-  // ✅ Ajuste importante: la API devuelve "data", no "response"
   const users = data?.data || [];
+  const totalPages = data?.lastPage || 1;
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-slate-100 p-4">
@@ -25,7 +28,6 @@ export default function UserTableView() {
               Crear usuario
             </Link>
           </div>
-
           <div className="overflow-x-auto">
             {users.length > 0 ? (
               <table className="table">
@@ -43,7 +45,7 @@ export default function UserTableView() {
                     <tr key={user.id}>
                       <td className="table-cell-center">{user.name}</td>
                       <td>{user.username}</td>
-                      <td>{user.role?.name || "Sin rol"}</td>
+                      <td>{user.roleId}</td>
                       <td>
                         {new Date(user.createdAt).toLocaleDateString("es-ES", {
                           year: "numeric",
@@ -81,6 +83,11 @@ export default function UserTableView() {
               </p>
             )}
           </div>
+          <PaginationComponent
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         </div>
       </div>
     </div>

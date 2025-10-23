@@ -1,0 +1,1 @@
+//agregar aca el consumo de la api para las categorias

@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import CrearRolForm from "@/components/adminPanel/CreateRolForm.js";
+import CrearRolForm from "@/components/forms/adminPanel/CreateRolForm.js";
 import { createRoleAPI } from "@/api/AdminAPI.js";
 
 export default function CreateRol() {
@@ -19,15 +19,19 @@ export default function CreateRol() {
     mode: "onChange",
   });
 
-  const { mutate } = useMutation({
-    mutationFn: createRoleAPI,
-    onError: (error: any) => toast.error(error.message),
-    onSuccess: (response) => {
-      toast.success(response.message || "Rol creado correctamente");
-      reset(); // limpiar campo
-      setTimeout(() => navigate("/rol"), 800);
-    },
-  });
+const { mutate } = useMutation({
+  mutationFn: createRoleAPI,
+  onError: (error: Error) => {
+    console.error("Error:", error);
+    toast.error(error.message || "Error inesperado");
+  },
+  onSuccess: (response) => {
+    console.log("Success:", response);
+    toast.success(response.message || "Rol creado correctamente");
+    reset();
+    setTimeout(() => navigate("/rol"), 800);
+  },
+});
 
   const handleForm = (data: CreateRolFormData) => mutate(data);
 

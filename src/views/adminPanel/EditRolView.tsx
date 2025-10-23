@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getRoleAPI, updateRoleAPI } from "@/api/AdminAPI.js";
 import type { CreateRolFormData } from "@/schemas/typesAdmin.js";
-import CrearRolForm from "@/components/adminPanel/CreateRolForm.js";
+import CrearRolForm from "@/components/forms/adminPanel/CreateRolForm.js";
 
 export default function EditRolView() {
   const { id } = useParams();

@@ -1,89 +1,88 @@
-import { Link,} from "react-router-dom";
-// import { useForm } from "react-hook-form";
-// import { toast } from "react-toastify";
-// import { useMutation } from "@tanstack/react-query";
-// import {CreateUserForm} from "../../components/adminPanel/LoginForm"
-import { Pencil, Trash2 } from "lucide-react";
-
+import { Link, useNavigate } from "react-router-dom";
+import type { createUserFormData } from "@/schemas/typesAdmin.js";
+import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { createUserAPI } from "@/api/AdminAPI.js";
+import { toast } from "react-toastify";
+import CreateUserForm from "@/components/forms/adminPanel/CreateUserForm.js";
 
 export default function CreateUserView() {
-  const roles = [
-    { numero: 1, nombre: "Administrador", fecha: "2025-10-01" },
-    { numero: 2, nombre: "Usuario", fecha: "2025-09-28" },
-    { numero: 3, nombre: "Supervisor", fecha: "2025-09-20" },
-    { numero: 4, nombre: "Administrador", fecha: "2025-10-01" },
-    { numero: 5, nombre: "Usuario", fecha: "2025-09-28" },
-    { numero: 6, nombre: "Supervisor", fecha: "2025-09-20" },
-    { numero: 7, nombre: "Administrador", fecha: "2025-10-01" },
-    { numero: 8, nombre: "Usuario", fecha: "2025-09-28" },
-    { numero: 9, nombre: "Supervisor", fecha: "2025-09-20" },
-    { numero: 10, nombre: "Administrador", fecha: "2025-10-01" },
-    { numero: 11, nombre: "Usuario", fecha: "2025-09-28" },
-    { numero: 12, nombre: "Supervisor", fecha: "2025-09-20" },
-    { numero: 13, nombre: "Administrador", fecha: "2025-10-01" },
-    { numero: 14, nombre: "Usuario", fecha: "2025-09-28" },
-    { numero: 15, nombre: "Supervisor", fecha: "2025-09-20" },
-  ];
-  return (
-    <>
-     <div className="flex items-center justify-center min-h-screen bg-slate-100 p-4">
-      <div className="max-w-6xl w-full">
-        {/* Contenedor de la tabla */}
-        <div className="table-container">
-          {/* Header de tabla con botón */}
-          <div className="table-header flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <h2 className="table-title">Lista de Roles</h2>
-            <Link to="/rol/create" className="btn-primary whitespace-nowrap">
-              Crear Rol
-            </Link>
-          </div>
+  const navigate = useNavigate();
+  const initialValues: createUserFormData = { name:"",username:"", password:"", roleId:0};
 
-          {/* Wrapper para scroll horizontal en móviles */}
-          <div className="overflow-x-auto">
-            {/* Tabla */}
-            <table className="table">
-              <thead>
-                <tr>
-                  <th className="table-cell-center">ID</th>
-                  <th>Nombre del Rol</th>
-                  <th className="table-cell-center">Fecha de Creación</th>
-                  <th className="table-cell-center">Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {roles.map((rol) => (
-                  <tr key={rol.numero}>
-                    <td className="table-cell-center">{rol.numero}</td>
-                    <td>{rol.nombre}</td>
-                    <td className="table-cell-center">{rol.fecha}</td>
-                    <td className="table-cell-center">
-                      <div className="table-actions justify-center">
-                        <button 
-                          className="btn-icon btn-icon-primary"
-                          title="Editar"
-                        >
-                          <Pencil size={16} />
-                        </button>
-                        <button 
-                          className="btn-icon"
-                          style={{
-                            borderColor: '#dc2626',
-                            color: '#dc2626'
-                          }}
-                          title="Eliminar"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<createUserFormData>({
+    defaultValues: initialValues,
+    mode: "all",
+    reValidateMode: "onChange",
+  });
+
+  const { mutate } = useMutation({
+    mutationFn: createUserAPI,
+    onError: (error) => toast.error(error.message),
+    onSuccess: (response) => {
+      toast.success(response);
+      navigate("/user");
+    },
+  });
+
+  const handleForm = async (data: createUserFormData) => mutate(data);
+
+  return (
+    <div className="min-h-screen bg-[var(--color-bg-primary)] py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-2xl mx-auto">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-[var(--color-primary-dark)] to-[var(--color-primary)] bg-clip-text text-transparent mb-3">
+            Crear Nuevo Usuario
+          </h1>
+        </div>
+
+        <div className="mb-6">
+          <Link
+            to="/user"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-white text-[var(--color-primary-dark)] font-semibold rounded-xl shadow-md hover:shadow-lg hover:bg-[var(--color-bg-secondary)] transition-all duration-200 border border-[var(--color-border-light)]"
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              />
+            </svg>
+            Regresar
+          </Link>
+        </div>
+
+        <div className="bg-white rounded-2xl shadow-xl border border-[var(--color-border-light)] overflow-hidden">
+          <div className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-dark)] h-2"></div>
+          <form
+            className="p-8 space-y-6"
+            onSubmit={handleSubmit(handleForm)}
+            noValidate
+          >
+            <CreateUserForm register={register} errors={errors} />
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-[var(--color-primary-dark)] to-[var(--color-primary)] hover:from-[var(--color-primary-darker)] hover:to-[var(--color-primary-dark)] text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-[var(--shadow-amber)] transform hover:-translate-y-0.5 transition-all duration-200 uppercase tracking-wide"
+            >
+              Crear Usuario
+            </button>
+          </form>
+        </div>
+
+        <div className="mt-6 text-center text-sm text-[var(--color-text-tertiary)]">
+          <p>Los cambios se aplicarán inmediatamente después de crear el usuario</p>
         </div>
       </div>
     </div>
-    </>
   );
 }

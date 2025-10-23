@@ -1,5 +1,16 @@
-import { Menu, X, Bell, Settings, User, TrendingUp, UserCircle, LogOut, ChevronRight } from "lucide-react";
+import {
+  Menu,
+  X,
+  Bell,
+  Settings,
+  User,
+  TrendingUp,
+  UserCircle,
+  LogOut,
+  ChevronRight,
+} from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+import { useUserLogout } from "../hooks/UserLogout.js";
 
 type HeaderProps = {
   sidebarOpen: boolean;
@@ -16,43 +27,42 @@ export default function Header({
 }: HeaderProps) {
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
-
-  // ✅ Cerrar dropdown al hacer clic fuera o presionar ESC
+  const { logout } = useUserLogout();
   useEffect(() => {
     const handlePointerOutside = (e: MouseEvent | TouchEvent) => {
-      if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(e.target as Node)
+      ) {
         setProfileDropdownOpen(false);
       }
     };
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setProfileDropdownOpen(false);
     };
-
     document.addEventListener("mousedown", handlePointerOutside);
-    document.addEventListener("touchstart", handlePointerOutside, { passive: true });
+    document.addEventListener("touchstart", handlePointerOutside, {
+      passive: true,
+    });
     document.addEventListener("keydown", handleKey);
-
     return () => {
       document.removeEventListener("mousedown", handlePointerOutside);
       document.removeEventListener("touchstart", handlePointerOutside);
       document.removeEventListener("keydown", handleKey);
     };
   }, []);
-
-  const handleLogout = () => {
-    console.log("Cerrando sesión...");
-    setProfileDropdownOpen(false);
-  };
-
   const handleProfile = () => {
     console.log("Ir a perfil...");
     setProfileDropdownOpen(false);
+  };
+  const handleLogout = () => {
+    setProfileDropdownOpen(false);
+    logout();
   };
 
   return (
     <header className="fixed top-0 left-0 right-0 h-16 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-b border-slate-700 z-50 shadow-xl">
       <div className="h-full flex items-center justify-between px-4 lg:px-6">
-        {/* Botón menú + Logo */}
         <div className="flex items-center gap-4">
           <button
             onClick={() => {
@@ -77,13 +87,12 @@ export default function Header({
                 Panino Divino
               </h1>
               <p className="text-xs text-slate-400 font-medium">
-                “Donde el pan cruje y el sabor conquista.”
+                “Frescura, sabor y actitud… ¡en cada panino!”
               </p>
             </div>
           </div>
         </div>
 
-        {/* Notificaciones + Perfil */}
         <div className="flex items-center gap-2">
           <button className="p-2.5 hover:bg-slate-700/50 rounded-lg transition-all relative group">
             <Bell className="w-5 h-5 text-slate-300 group-hover:text-white transition-colors" />
@@ -94,8 +103,10 @@ export default function Header({
             <Settings className="w-5 h-5 text-slate-300 group-hover:text-white transition-colors" />
           </button>
 
-          {/* Dropdown Perfil */}
-          <div className="relative ml-2 pl-2 border-l border-slate-700" ref={profileRef}>
+          <div
+            className="relative ml-2 pl-2 border-l border-slate-700"
+            ref={profileRef}
+          >
             <button
               onClick={() => setProfileDropdownOpen((v) => !v)}
               className="flex items-center gap-3 hover:bg-slate-700/50 rounded-lg pl-3 pr-2 py-1.5 transition-all group"
