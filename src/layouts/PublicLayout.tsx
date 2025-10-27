@@ -7,6 +7,7 @@ export default function PublicLayout() {
       <Outlet />
         <ToastContainer
         position="top-right"
+        autoClose={5000} 
         pauseOnHover={false}
         pauseOnFocusLoss={false}
       />

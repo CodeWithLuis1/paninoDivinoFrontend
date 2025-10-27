@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { paginationSchema } from "@/schemas/paginateSchemas.js";
 //login
 export const loginRequestSchema = z.object({
   username: z.string(),
@@ -16,9 +17,9 @@ export const loginResponseSchema = z.object({
 export type LoginRequest = z.infer<typeof loginRequestSchema>;
 export type LoginResponse = z.infer<typeof loginResponseSchema>;
 
-//rol
+//role
 export const createRolSchema = z.object({
-  name: z.string().min(1, "El nombre del rol es obligatorio"),
+  name: z.string()
 });
 export const rolSchema = z.object({
   id: z.number(),
@@ -58,30 +59,28 @@ export type BackendError = z.infer<typeof backendErrorSchema>;
 // ===========================
 // USERS
 // ===========================
-export const createUserSchema = z.object({
-  name: z.string(),
-  username: z.string(),
-  password: z.string(),
-  roleId: z.number()
-});
-export type createUserFormData = z.infer<typeof createUserSchema>
-
 export const userSchema = z.object({
   id: z.number(),
   name: z.string(),
   username: z.string(),
   password: z.string(),
   roleId: z.number(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-});
+  createdAt: z.coerce.date(),
+  role:createRolSchema
+})
+export const userListItemSchema = (
+  userSchema.pick({
+    id: true,
+    name: true,
+    username: true,
+    password: true,
+    roleId: true,
+    createdAt: true,
+    role:true
+  })
+)
+export const getUserSchema = paginationSchema(userListItemSchema)
 
-export const getUserSchema = z.object({
-  statusCode: z.number(),
-  data: z.array(userSchema),
-  total: z.number(),
-  limit: z.number().nullable(),
-  lastPage: z.number(),
-});
-export type User = z.infer<typeof userSchema>;
-export type GetUsersResponse = z.infer<typeof getUserSchema>;
+export type User = z.infer<typeof userSchema>
+export type UserFormData = Pick<User, "name" | "username" | "password" | "roleId">
+export type GetUserResponse = z.infer<typeof getUserSchema>

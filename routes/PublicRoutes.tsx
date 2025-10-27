@@ -1,6 +1,6 @@
 import { Navigate, Route } from "react-router-dom";
 import PublicLayout from "@/layouts/PublicLayout.js";
-import Login from "@/views/auth/LoginView.js";
+import Login from "@/views/adminPanel/LoginView.js";
 
 export default function PublicRoutes() {
   return (

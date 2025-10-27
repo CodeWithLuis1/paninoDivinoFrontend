@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 // import Swal from "sweetalert2";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getRoleAPI, updateRoleAPI } from "@/api/AdminAPI.js";
+import { getRoleAPI, updateRoleAPI } from "@/api/RoleAPI.js";
 import type { CreateRolFormData } from "@/schemas/typesAdmin.js";
 import CrearRolForm from "@/components/forms/adminPanel/CreateRolForm.js";
 

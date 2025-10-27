@@ -30,14 +30,17 @@ const routes = [
   { path: "/order/:orderId/edit", component: lazy(() => import("@/views/orders/EditOrderView.js")), roles: [] },
 
   // ========Productos ========
-  { path: "/products", component: lazy(() => import("@/components/products/ProductsTable.js")), roles: [] },
-  { path: "/products/create", component: lazy(() => import("@/components/products/ProductForm.js")), roles: [] },
+  { path: "/products", component: lazy(() => import("@/views/TableProduct.js")), roles: [] },
+  { path: "/products/create", component: lazy(() => import("@/views/CreateProductView.js")), roles: [] },
 
   // ======== Inventario (nuevo) ========
   { path: "/inventario", component: lazy(() => import("@/pages/inventario/Inventario.jsx")), roles: [] },
 
     // ======== categorias ========
   { path: "/categories", component: lazy(() => import("@/views/TableProductCategories.js")), roles: [] },
+  { path: "/categories/create", component: lazy(() => import("@/views/CreateProductCategories.js")), roles: [] },
+
+
 ];
 
 export default function AdminRoutes() {

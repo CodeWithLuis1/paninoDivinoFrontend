@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./HeaderLayout.js";
 import Sidebar from "./SidebarLayout.js";
+import { ToastContainer } from "react-toastify";
+
 
 export default function AppLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -27,6 +29,12 @@ export default function AppLayout() {
       {/* Contenido */}
       <main className="pt-16 lg:ml-64 p-6">
         <Outlet />
+        <ToastContainer
+          position="top-right"
+          autoClose={5000} 
+          pauseOnHover={false}
+          pauseOnFocusLoss={false}
+        />
       </main>
     </div>
   );

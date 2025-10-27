@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import CrearRolForm from "@/components/forms/adminPanel/CreateRolForm.js";
-import { createRoleAPI } from "@/api/AdminAPI.js";
+import { createRoleAPI } from "@/api/RoleAPI.js";
 
 export default function CreateRol() {
   const navigate = useNavigate();
@@ -33,7 +33,8 @@ const { mutate } = useMutation({
   },
 });
 
-  const handleForm = (data: CreateRolFormData) => mutate(data);
+  const handleForm = (data: CreateRolFormData) =>mutate(data);
+  
 
   return (
     <div className="min-h-screen bg-[var(--color-bg-primary)] py-12 px-4 sm:px-6 lg:px-8">

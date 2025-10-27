@@ -1,4 +1,4 @@
-import Navegation from "../components/Navegation"; // importa tu componente
+import Navegation from "@/components/Navegation.js"; // importa tu componente
 
 interface SidebarProps {
   sidebarOpen: boolean;

@@ -1,14 +1,14 @@
 import type { FieldErrors, UseFormRegister } from "react-hook-form";
 import { ErrorMessage } from "@/components/utilities-components/ErrorMessage.js";
-import type { createUserFormData } from "@/schemas/typesAdmin.js";
+import type { UserFormData } from "@/schemas/typesAdmin.js";
 import { useState } from "react";
-import { getRoleAPI } from "@/api/AdminAPI.js";
+import { getRoleAPI } from "@/api/RoleAPI.js";
 import type { Rol } from "@/schemas/typesAdmin.js";
 import { useEffect } from "react";
 
 type CreateUserFormProps = {
-  register: UseFormRegister<createUserFormData>;
-  errors: FieldErrors<createUserFormData>;
+  register: UseFormRegister<UserFormData>;
+  errors: FieldErrors<UserFormData>;
 };
 
 export default function CreateUserForm({
@@ -111,7 +111,7 @@ export default function CreateUserForm({
         )}
       </div>
 
-,      <div className="form-group">
+    <div className="form-group">
         <label htmlFor="role_id" className="form-label">
           Rol <span className="required">*</span>
         </label>
@@ -121,7 +121,9 @@ export default function CreateUserForm({
           className={`form-input ${
             errors.roleId ? "form-input-error" : "form-input-normal"
           }`}
-          {...register("roleId", { required: "El rol es obligatorio" })}
+          {...register("roleId", { required: "El rol es obligatorio",
+          valueAsNumber: true  
+          })}
           disabled={loadingRoles}
         >
           <option value="">Selecciona un rol</option>

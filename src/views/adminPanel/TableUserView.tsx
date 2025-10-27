@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { getUserAPI } from "@/api/AdminAPI.js";
+import { getUserAPI } from "@/api/UserAPI.js";
 import { Pencil, Trash2 } from "lucide-react";
 import PaginationComponent from "@/components/utilities-components/PaginationComponent.js";
 import { useState } from "react";
@@ -8,17 +8,22 @@ import { useQuery } from "@tanstack/react-query";
 export default function UserTableView() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10);
+
+  // //Look, if we hover over the data, we see the type, but it also says it can be undefined all the way down.
+  // That's going to cause problems in the data.map when looping because it says it might be undefined. To fix it, just add a question mark like this: data?.map 
+  // However, the documentation recommends performing a validation before the return statement, meaning that if there is data, then perform the return so that it works correctly.
   const { data, isLoading, isError } = useQuery({
     queryKey: ["users", currentPage, pageSize],
     queryFn: () => getUserAPI(currentPage),
   });
+
   const handlePageChange = (page: number) => setCurrentPage(page);
   if (isLoading) return <p>Cargando usuarios...</p>;
   if (isError) return <p>Error al cargar los datos.</p>;
   const users = data?.data || [];
   const totalPages = data?.lastPage || 1;
 
-  return (
+  if(data) return (
     <div className="flex items-center justify-center min-h-screen bg-slate-100 p-4">
       <div className="max-w-6xl w-full">
         <div className="table-container">
@@ -45,7 +50,7 @@ export default function UserTableView() {
                     <tr key={user.id}>
                       <td className="table-cell-center">{user.name}</td>
                       <td>{user.username}</td>
-                      <td>{user.roleId}</td>
+                      <td>{user.role.name}</td>
                       <td>
                         {new Date(user.createdAt).toLocaleDateString("es-ES", {
                           year: "numeric",

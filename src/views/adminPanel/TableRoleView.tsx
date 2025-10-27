@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getRoleAPI, deleteRoleAPI } from "@/api/AdminAPI.js";
+import { getRoleAPI, deleteRoleAPI } from "@/api/RoleAPI.js";
 import PaginationComponent from "@/components/utilities-components/PaginationComponent.js";
 import { Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
