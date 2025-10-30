@@ -48,7 +48,7 @@ export default function UserTableView() {
                 <tbody>
                   {users.map((user) => (
                     <tr key={user.id}>
-                      <td className="table-cell-center">{user.name}</td>
+                      <td>{user.name}</td>
                       <td>{user.username}</td>
                       <td>{user.role.name}</td>
                       <td>

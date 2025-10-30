@@ -53,7 +53,7 @@ export default function OrdersTable({ rows = [], loading, onResume, onClose }) {
               <tr><td className="px-3 py-6 text-center" colSpan={5}>Sin pedidos</td></tr>
             ) : (
               body
-            )}
+            )} 
           </tbody>
         </table>
       </div>

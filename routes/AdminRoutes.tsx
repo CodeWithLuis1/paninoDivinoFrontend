@@ -5,9 +5,6 @@ import AppLayout from "@/layouts/AppLayout.js";
 import { Spinner } from "@/components/utilities-components/Spinner.js";
 
 const routes = [
-  // ======== Panel principal ========
-  { path: "/", component: lazy(() => import("@/views/DashboardView.js")), roles: [] },
-
   // ======== Gestión de Roles ========
   { path: "/rol", component: lazy(() => import("@/views/adminPanel/TableRoleView.js")), roles: [] },
   { path: "/rol/create", component: lazy(() => import("@/views/adminPanel/CreateRol.js")), roles: [] },
@@ -21,6 +18,9 @@ const routes = [
   { path: "/pedidos", component: lazy(() => import("@/pages/PedidosPage.jsx")), roles: [] },
   { path: "/pedidos/:id", component: lazy(() => import("@/pages/pedidos/PedidoEditor.jsx")), roles: [] },
   { path: "/order/create", component: lazy(() => import("@/pages/pedidos/PedidoEditor.jsx")), roles: [] },
+
+  //  // ======== Pedidos Modificando ========
+  // { path: "/pedidos", component: lazy(() => import("@/pages/PedidosPage.jsx")), roles: [] },
 
   // ======== Cobros ========
   { path: "/cobros/:id", component: lazy(() => import("@/pages/cobros/CobroPage.jsx")), roles: [] },

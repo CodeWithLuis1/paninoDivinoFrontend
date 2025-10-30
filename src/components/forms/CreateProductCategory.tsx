@@ -2,14 +2,13 @@ import { ErrorMessage } from "@/components/utilities-components/ErrorMessage.js"
 import type { UseFormRegister, FieldErrors } from "react-hook-form";
 import type { ProductCategoryFormData } from "@/schemas/types.js";
 
-
 type ProductCategoryProps = {
   register: UseFormRegister<ProductCategoryFormData>;
   errors: FieldErrors<ProductCategoryFormData>;
 }
 export default function CreateProductCategory({register, errors}: ProductCategoryProps) {
 
-   return (
+  return (
       <div className="form-container">
         <div className="form-group">
           <label htmlFor="name" className="form-label">

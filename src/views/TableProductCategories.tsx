@@ -37,16 +37,16 @@ export default function TableProductCategories() {
                 <thead>
                   <tr>
                     <th>Id</th>
-                    <th className="table-cell-center">Categoría</th>
-                    <th className="table-cell-center">Acciones</th>
+                    <th>Categoría</th>
+                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
                   {categories.map((category) => (
                     <tr key={category.id_category}>
-                      <td className="table-cell-center">{category.id_category}</td>
-                      <td className="table-cell-center">{category.name}</td>
-                      <td className="table-cell-center">
+                      <td>{category.id_category}</td>
+                      <td>{category.name}</td>
+                      <td>
                         <div className="table-actions justify-center">
                           <button
                             className="btn-icon btn-icon-primary"

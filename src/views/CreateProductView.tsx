@@ -1,20 +1,37 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { CreateProductForm } from "@/components/forms/CreateProductForm.js";
+import type { ProductFormData } from "@/schemas/types.js";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { createProductAPI } from "@/api/ProductsAPI.js";
+import { useNavigate } from "react-router-dom";
+import { ca } from "zod/v4/locales";
+
 
 export default function CreateProductView() {
-  const initialValues = {
+  const navigate = useNavigate();
+  const initialValues:ProductFormData = {
     name: "",
     description: "",
     image: "",
-    active: "",
-    id_category: "",
+    active: true,
+    id_category:0,
   };
 
-  const {register,handleSubmit,formState: { errors }} = useForm({ defaultValues: initialValues });
-  const handleForm = (data: ) =>{
-    console.log(data);
-  } 
+  const {register,handleSubmit,formState: { errors }, setValue} = useForm<ProductFormData>({ defaultValues: initialValues });
+  const {mutate} = useMutation({
+    mutationFn:createProductAPI,
+    onError: (error)=>{
+      toast.error(error.message);
+    },
+    onSuccess:(data)=>{
+      toast.success(data.message);
+      navigate("/products");
+    }
+  })
+
+  const handleForm = (formData:ProductFormData ) =>{mutate(formData)} 
 
   return (
     <div className="min-h-screen bg-[var(--color-bg-primary)] py-12 px-4 sm:px-6 lg:px-8">
@@ -54,7 +71,7 @@ export default function CreateProductView() {
             onSubmit={handleSubmit(handleForm)}
             noValidate
           >
-            <CreateProductForm register={register} errors={errors} />
+            <CreateProductForm register={register} errors={errors} setValue={setValue}  />
             <input
               type="submit"
               value="Crear Producto"
