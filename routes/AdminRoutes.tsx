@@ -40,6 +40,9 @@ const routes = [
   { path: "/categories", component: lazy(() => import("@/views/TableProductCategories.js")), roles: [] },
   { path: "/categories/create", component: lazy(() => import("@/views/CreateProductCategories.js")), roles: [] },
 
+  { path: "/orders", component: lazy(() => import("@/views/ProductsOrders/OrdersTable .js")), roles: [] },
+  { path: "/orders/start", component: lazy(() => import("@/views/ProductsOrders/NewOrderModal.js")), roles: [] },
+  { path: "/orders/menu", component: lazy(() => import("@/views/ProductsOrders/ProductGrid.js")), roles: [] },
 
 ];
 

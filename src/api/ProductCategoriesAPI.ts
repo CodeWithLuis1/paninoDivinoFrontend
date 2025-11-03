@@ -19,6 +19,7 @@ export async function getCategoriesAPI(page:number = 1 ){
         const limit = 10;
         const offset = page;
         const {data} = await api.get("/category",{params:{limit, offset}})
+        console.log("Categories API response:", data);
         const response = getCategoriesSchema.safeParse(data);
         // console.log(response)
         if(response.success){
@@ -30,4 +31,16 @@ export async function getCategoriesAPI(page:number = 1 ){
                 throw new Error(error.response.data.error);
             }
     }
+}
+
+export async function getCategoryProducts(id_category: number) {
+  try {
+    const { data } = await api.get(`/category/${id_category}`);
+    return data.data.products;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message || "Error al obtener productos");
+    }
+    throw error;
+  }
 }

@@ -42,4 +42,31 @@ export const getCategoriesSchema = paginationSchema(productCategoriesList)
 export type CreateProductCategory = z.infer<typeof productCategorySchema>;
 export type ProductCategoryFormData = Pick<CreateProductCategory, "id_category"|"name" >;
 
-//products
+//orders
+export const orderSchema = z.object({
+  id_order: z.number(),
+  order_number: z.string(),
+  id_client: z.number(),
+  status: z.string(),
+  total_cents: z.number(),
+  client: z
+    .object({
+      client_name: z.string(),
+    })
+    .nullable()
+    .optional(),
+  payment: z.any().nullable().optional(),
+});
+
+// Lista de pedidos
+export const ordersList = z.array(orderSchema);
+
+// Tipo de respuesta
+export type OrderListFormData = z.infer<typeof orderSchema>;
+
+// Schema para el formulario de creación
+export const orderFormSchema = z.object({
+  client_name: z.string().min(1, "El nombre del cliente es obligatorio"),
+});
+
+export type OrderFormData = z.infer<typeof orderFormSchema>;

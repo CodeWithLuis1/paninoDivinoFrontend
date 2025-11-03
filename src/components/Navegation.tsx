@@ -28,6 +28,10 @@ export default function Navegation() {
       <NavLinkComponent url="/products" text="Productos">
         <Box />
       </NavLinkComponent>
+
+      <NavLinkComponent url="/orders" text="Pedidos">
+        <HandPlatter />
+      </NavLinkComponent>
     </div>
   );
 }

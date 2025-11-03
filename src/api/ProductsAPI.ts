@@ -32,3 +32,29 @@ export async function getProductsAPI(page: number = 1){
     }
   }
 }
+
+export async function getProductsByCategoryAPI(id_category: number) {
+  try {
+    if (!id_category) {
+      throw new Error("El ID de categoría es obligatorio");
+    }
+
+    const { data } = await api.get(`/category/${id_category}`);
+    // Devuelve EXACTAMENTE lo que manda el backend
+    return data;
+  } catch (error: unknown) {
+    console.error("Error en getProductsByCategoryAPI:", error);
+
+    if (isAxiosError(error) && error.response) {
+      // Devuelve la respuesta del backend tal cual (manteniendo statusCode/message/data)
+      return error.response.data;
+    }
+
+    // Fallback si ni siquiera hay respuesta del servidor
+    return {
+      statusCode: 500,
+      message: "Error de conexión con el servidor",
+      data: null,
+    };
+  }
+}
