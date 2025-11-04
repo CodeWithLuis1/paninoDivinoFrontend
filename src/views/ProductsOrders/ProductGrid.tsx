@@ -9,15 +9,12 @@ import type { CreateProduct } from "@/schemas/types.js"; // ⬅️ importamos el
 export default function ProductGrid() {
   const [selectedCategory, setSelectedCategory] = useState<number>(1);
   const [searchTerm, setSearchTerm] = useState("");
-
   const { data, isLoading, isError } = useQuery({
     queryKey: ["products", selectedCategory],
     queryFn: () => getProductsByCategoryAPI(selectedCategory!),
     enabled: !!selectedCategory,
   });
-
   const products: CreateProduct[] = data?.data?.products || [];
-
   const filteredProducts = products.filter((p) =>
     p.name.toLowerCase().includes(searchTerm.toLowerCase())
   );

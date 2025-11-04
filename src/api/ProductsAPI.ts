@@ -5,7 +5,6 @@ import { isAxiosError } from "axios";
 import { getProductSchema } from "@/schemas/types.js";
 
 export async function createProductAPI(formData: ProductFormData) {
-   console.log("Datos que se enviarán al backend:", formData);
   try {
     const { data } = await api.post("/products", formData);
     return data;
@@ -22,7 +21,6 @@ export async function getProductsAPI(page: number = 1){
     const offset = page;
     const {data} = await api.get("/products",{params:{limit, offset}})
     const response = getProductSchema.safeParse(data);
-    console.log("backend response",response)
     if (response.success){
       return response.data;
     }

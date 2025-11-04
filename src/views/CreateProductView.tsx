@@ -1,37 +1,50 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { CreateProductForm } from "@/components/forms/CreateProductForm.js";
 import type { ProductFormData } from "@/schemas/types.js";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { createProductAPI } from "@/api/ProductsAPI.js";
-import { useNavigate } from "react-router-dom";
-import { ca } from "zod/v4/locales";
-
+import { IngredientModal } from "@/components/forms/IngredientModalForm.js";
+import React from "react";
 
 export default function CreateProductView() {
   const navigate = useNavigate();
-  const initialValues:ProductFormData = {
+
+  // 🔹 Estado para manejar el modal
+  const [showIngredientModal, setShowIngredientModal] = React.useState(false);
+  const [createdProductId, setCreatedProductId] = React.useState<number | null>(
+    null
+  );
+
+  const initialValues: ProductFormData = {
     name: "",
     description: "",
     image: "",
     active: true,
-    id_category:0,
+    id_category: 0,
   };
 
-  const {register,handleSubmit,formState: { errors }, setValue} = useForm<ProductFormData>({ defaultValues: initialValues });
-  const {mutate} = useMutation({
-    mutationFn:createProductAPI,
-    onError: (error)=>{
-      toast.error(error.message);
-    },
-    onSuccess:(data)=>{
-      toast.success(data.message);
-      navigate("/products");
-    }
-  })
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<ProductFormData>({ defaultValues: initialValues });
 
-  const handleForm = (formData:ProductFormData ) =>{mutate(formData)} 
+  const { mutate } = useMutation({
+    mutationFn: createProductAPI,
+    onSuccess: (data) => {
+      toast.success(data.message);
+      setCreatedProductId(data.data.id_product);
+      setShowIngredientModal(true);
+    },
+    onError: (error: any) => {
+      toast.error(error.message || "Error al crear el producto");
+    },
+  });
+
+  const handleForm = (formData: ProductFormData) => mutate(formData);
 
   return (
     <div className="min-h-screen bg-[var(--color-bg-primary)] py-12 px-4 sm:px-6 lg:px-8">
@@ -71,7 +84,11 @@ export default function CreateProductView() {
             onSubmit={handleSubmit(handleForm)}
             noValidate
           >
-            <CreateProductForm register={register} errors={errors} setValue={setValue}  />
+            <CreateProductForm
+              register={register}
+              errors={errors}
+              setValue={setValue}
+            />
             <input
               type="submit"
               value="Crear Producto"
@@ -86,6 +103,17 @@ export default function CreateProductView() {
           </p>
         </div>
       </div>
+
+      {/* 🔹 Modal para agregar ingredientes */}
+      {showIngredientModal && createdProductId && (
+        <IngredientModal
+          idProduct={createdProductId}
+          onClose={() => {
+            setShowIngredientModal(false);
+            navigate("/products");
+          }}
+        />
+      )}
     </div>
   );
 }

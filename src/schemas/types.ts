@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { paginationSchema } from "@/schemas/paginateSchemas.js";
 
-
 export const productSchema = z.object({
   id_product: z.number(),
   name: z.string(),
@@ -31,7 +30,6 @@ export const productCategorySchema = z.object({
   id_category: z.number(),
   name: z.string(),
 })
-
 export const productCategoriesList=(
   productCategorySchema.pick({
     id_category:true,
@@ -58,15 +56,21 @@ export const orderSchema = z.object({
   payment: z.any().nullable().optional(),
 });
 
-// Lista de pedidos
 export const ordersList = z.array(orderSchema);
-
-// Tipo de respuesta
 export type OrderListFormData = z.infer<typeof orderSchema>;
-
-// Schema para el formulario de creación
 export const orderFormSchema = z.object({
   client_name: z.string().min(1, "El nombre del cliente es obligatorio"),
 });
-
 export type OrderFormData = z.infer<typeof orderFormSchema>;
+
+// ingredients            
+export const ingredientSchema = z.object({
+  id_ingredient: z.number(),
+  id_product: z.number(),
+  name: z.string(),
+  quantity_per_product: z.number().nullable(),
+  unit: z.string().nullable(),
+  track_in_inventory: z.boolean(),
+});
+export type Ingredient = z.infer<typeof ingredientSchema>;
+export type IngredientFormData = Pick<Ingredient,"id_product" | "name" | "quantity_per_product" | "unit">;

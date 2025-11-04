@@ -19,7 +19,6 @@ export async function getCategoriesAPI(page:number = 1 ){
         const limit = 10;
         const offset = page;
         const {data} = await api.get("/category",{params:{limit, offset}})
-        console.log("Categories API response:", data);
         const response = getCategoriesSchema.safeParse(data);
         // console.log(response)
         if(response.success){
