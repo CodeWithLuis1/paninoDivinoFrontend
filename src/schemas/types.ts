@@ -21,7 +21,6 @@ export const productsList = (
   })
 )
 export const getProductSchema = paginationSchema(productsList)
-
 export type CreateProduct = z.infer<typeof productSchema>;
 export type ProductFormData = Pick<CreateProduct, "name" | "description" | "image" | "active" | "id_category">;
 
@@ -65,12 +64,17 @@ export type OrderFormData = z.infer<typeof orderFormSchema>;
 
 // ingredients            
 export const ingredientSchema = z.object({
-  id_ingredient: z.number(),
-  id_product: z.number(),
-  name: z.string(),
-  quantity_per_product: z.number().nullable(),
-  unit: z.string().nullable(),
-  track_in_inventory: z.boolean(),
+  ingredient_id: z.number(),
+  ingredient_name: z.string(),
+  is_active: z.boolean(),
 });
+
+export const ingredientSchemaList=(
+  ingredientSchema.pick({
+    ingredient_id:true,
+    ingredient_name:true,
+  })
+)
+export const getIngredientSchema = paginationSchema(ingredientSchemaList)
 export type Ingredient = z.infer<typeof ingredientSchema>;
-export type IngredientFormData = Pick<Ingredient,"id_product" | "name" | "quantity_per_product" | "unit">;
+export type IngredientFormData = Pick<Ingredient,"ingredient_name">;

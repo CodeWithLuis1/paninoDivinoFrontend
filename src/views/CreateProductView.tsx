@@ -104,7 +104,7 @@ export default function CreateProductView() {
         </div>
       </div>
 
-      {/* 🔹 Modal para agregar ingredientes */}
+      {/* 🔹 Modal para agregar ingredientes
       {showIngredientModal && createdProductId && (
         <IngredientModal
           idProduct={createdProductId}
@@ -113,7 +113,7 @@ export default function CreateProductView() {
             navigate("/products");
           }}
         />
-      )}
+      )} */}
     </div>
   );
 }

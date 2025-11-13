@@ -44,6 +44,8 @@ const routes = [
   { path: "/orders/start", component: lazy(() => import("@/views/ProductsOrders/NewOrderModal.js")), roles: [] },
   { path: "/orders/menu", component: lazy(() => import("@/views/ProductsOrders/ProductGrid.js")), roles: [] },
 
+  { path: "/ingredients", component: lazy(() => import("@/views/ingredients/TableIngredient.js")), roles: [] },
+  
 ];
 
 export default function AdminRoutes() {

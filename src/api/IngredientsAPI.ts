@@ -1,28 +1,29 @@
 import api from "@/lib/axios.js";
 import type { IngredientFormData } from "@/schemas/types.js";
+import { getIngredientSchema } from "@/schemas/types.js";
 import { isAxiosError } from "axios";
 
-type CreateIngredientsPayload =
-  | {
-      id_product: number;
-      ingredients: IngredientFormData[];
-    }
-  | {
-      id_product: number;
-      ingredients: IngredientFormData;
-    };
 
-export async function createIngredientsAPI(payload: CreateIngredientsPayload) {
+export async function createIngredientAPI(formData: IngredientFormData) {
   try {
-     console.log("📦 Payload enviado al backend:", payload);
-    const { data } = await api.post("/ingredients", payload);
-    console.log("Ingredientes creados:", data);
+    const { data } = await api.post("/ingredients", formData);
     return data;
   } catch (error) {
-    if (isAxiosError(error)) {
-      console.error("Error API:", error.response?.data);
-      throw new Error(error.response?.data?.message || "Error en la API");
+            if(isAxiosError(error) && error.response){
+            throw new Error(error.response.data.error);
+        }
     }
-    throw error;
+}
+
+export async function getIngredientAPI(page: number = 1) {
+  try {
+    const limit = 10;
+    const { data } = await api.get("/ingredients", {params: { page, limit },});
+    const response = getIngredientSchema.safeParse(data);
+      return response.data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message || "Error en la API");
+    }
   }
 }
