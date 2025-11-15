@@ -2,7 +2,7 @@ import type { FieldErrors, UseFormRegister } from "react-hook-form";
 import { ErrorMessage } from "@/components/utilities-components/ErrorMessage.js";
 import type { UserFormData } from "@/schemas/typesAdmin.js";
 import { useState } from "react";
-import { getRoleAPI } from "@/api/RoleAPI.js";
+import { getRoleAPI } from "@/api/adminAPIS/RoleAPI.js";
 import type { Rol } from "@/schemas/typesAdmin.js";
 import { useEffect } from "react";
 

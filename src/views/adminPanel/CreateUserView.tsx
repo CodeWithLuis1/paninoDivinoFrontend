@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import type { UserFormData } from "@/schemas/typesAdmin.js";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import {createUserAPI} from "@/api/UserAPI.js";
+import {createUserAPI} from "@/api/adminAPIS/UserAPI.js";
 import { toast } from "react-toastify";
 import CreateUserForm from "@/components/forms/adminPanel/CreateUserForm.js";
 

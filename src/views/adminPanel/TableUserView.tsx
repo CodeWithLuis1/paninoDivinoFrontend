@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { getUserAPI } from "@/api/UserAPI.js";
+import { getUserAPI } from "@/api/adminAPIS/UserAPI.js";
 import { Pencil, Trash2 } from "lucide-react";
 import PaginationComponent from "@/components/utilities-components/PaginationComponent.js";
 import { useState } from "react";

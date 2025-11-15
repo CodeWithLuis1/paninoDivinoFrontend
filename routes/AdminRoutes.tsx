@@ -16,27 +16,9 @@ const routes = [
   { path: "/user", component: lazy(() => import("@/views/adminPanel/TableUserView.js")), roles: [] },
   { path: "/user/create", component: lazy(() => import("@/views/adminPanel/CreateUserView.js")), roles: [] },
 
-  // ======== Pedidos (lista + editor) ========
-  { path: "/pedidos", component: lazy(() => import("@/pages/PedidosPage.jsx")), roles: [] },
-  { path: "/pedidos/:id", component: lazy(() => import("@/pages/pedidos/PedidoEditor.jsx")), roles: [] },
-  { path: "/order/create", component: lazy(() => import("@/pages/pedidos/PedidoEditor.jsx")), roles: [] },
-
-  //  // ======== Pedidos Modificando ========
-  // { path: "/pedidos", component: lazy(() => import("@/pages/PedidosPage.jsx")), roles: [] },
-
-  // ======== Cobros ========
-  { path: "/cobros/:id", component: lazy(() => import("@/pages/cobros/CobroPage.jsx")), roles: [] },
-
-  // (Opcional/legacy)
-  { path: "/order/:orderId", component: lazy(() => import("@/views/orders/OrderDetailsView.js")), roles: [] },
-  { path: "/order/:orderId/edit", component: lazy(() => import("@/views/orders/EditOrderView.js")), roles: [] },
-
   // ========Productos ========
   { path: "/products", component: lazy(() => import("@/views/Product/TableProduct.js")), roles: [] },
   { path: "/products/create", component: lazy(() => import("@/views/Product/CreateProductView.js")), roles: [] },
-
-  // ======== Inventario (nuevo) ========
-  { path: "/inventario", component: lazy(() => import("@/pages/inventario/Inventario.jsx")), roles: [] },
 
     // ======== categorias ========
   { path: "/categories", component: lazy(() => import("@/views/Product/TableProductCategories.js")), roles: [] },

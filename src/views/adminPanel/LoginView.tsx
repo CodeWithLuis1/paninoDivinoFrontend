@@ -2,7 +2,7 @@ import { User, Lock, TrendingUp, Eye, EyeOff, LogIn } from "lucide-react";
 // import { ErrorMessage } from "../../components/utilities-components/ErrorMessage";
 import { useState } from "react";
 import type { LoginRequest } from "@/schemas/login.js";
-import { loginApi } from "../../api/LoginAPI.js";
+import { loginApi } from "../../api/adminAPIS/LoginAPI.js";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";

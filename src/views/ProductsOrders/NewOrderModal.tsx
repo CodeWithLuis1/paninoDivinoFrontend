@@ -4,7 +4,25 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { orderFormSchema } from "@/schemas/types.js";
 import type { OrderFormData } from "@/schemas/types.js";
 import { createOrderAPI } from "@/api/OrdersAPI.js";
-import { toast } from "react-toastify";
+// Lightweight local toast fallback to avoid requiring 'react-toastify' here.
+// If you add react-toastify to the project later, you can restore the import.
+const toast = {
+  success: (msg: string) => {
+    // Prefer an in-app non-blocking handler if provided, otherwise log
+    if (typeof window !== "undefined" && (window as any).toastFallback) {
+      (window as any).toastFallback(msg, "success");
+    } else {
+      console.log("Success:", msg);
+    }
+  },
+  error: (msg: string) => {
+    if (typeof window !== "undefined" && (window as any).toastFallback) {
+      (window as any).toastFallback(msg, "error");
+    } else {
+      console.error("Error:", msg);
+    }
+  },
+};
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 

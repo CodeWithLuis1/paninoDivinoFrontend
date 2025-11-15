@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import CrearRolForm from "@/components/forms/adminPanel/CreateRolForm.js";
-import { createRoleAPI } from "@/api/RoleAPI.js";
+import { createRoleAPI } from "@/api/adminAPIS/RoleAPI.js";
 
 export default function CreateRol() {
   const navigate = useNavigate();
