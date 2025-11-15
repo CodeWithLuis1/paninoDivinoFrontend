@@ -1,7 +1,7 @@
 
 import { Navigate,useNavigate,useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getOrderById } from "@/api/OrdersAPI.js";
+// import { getOrderById } from "@/api/OrdersAPI.js";
 export default function OrderDetailsView() {
 
   const navigate = useNavigate()
@@ -11,19 +11,20 @@ export default function OrderDetailsView() {
   // Aseguramos que siempre sea número válido
   const id = Number(orderId);
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["updateOrder", orderId],
-    queryFn: () => getOrderById(id),
-    enabled: !isNaN(id),
-    retry: 3 //This will retry 3 times to get the data and if it fails it will show the error message.
-  });
+  // const { data, isLoading, isError } = useQuery({
+  //   queryKey: ["updateOrder", orderId],
+  //   queryFn: () => getOrderById(id),
+  //   enabled: !isNaN(id),
+  //   retry: 3 //This will retry 3 times to get the data and if it fails it will show the error message.
+  // });
 
-  if (isLoading) return 'Cargando...';
-  if (isError) return <Navigate to='/404'/>;
-  if(data) return (
+  // if (isLoading) return 'Cargando...';
+  // if (isError) return <Navigate to='/404'/>;
+  // if(data) return (
+  return (
     <>
-      <h1 className="text-5xl font-black">{data.data.clientName} </h1>
-      <p className="text-2xl font-light text-gray-500 mt-5"> {data.data.clientEmail} </p>
+      <h1 className="text-5xl font-black"> </h1>
+      <p className="text-2xl font-light text-gray-500 mt-5">  </p>
 
       <button
         type="button"

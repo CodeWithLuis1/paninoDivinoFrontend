@@ -3,6 +3,9 @@ import type { ProductFormData } from "@/schemas/types.js";
 import api from "@/lib/axios.js";
 import { isAxiosError } from "axios";
 import { getProductSchema } from "@/schemas/types.js";
+import { productIngredientsResponseSchema } from "@/schemas/types.js";
+
+
 
 export async function createProductAPI(formData: ProductFormData) {
   try {
@@ -21,6 +24,7 @@ export async function getProductsAPI(page: number = 1){
     const offset = page;
     const {data} = await api.get("/products",{params:{limit, offset}})
     const response = getProductSchema.safeParse(data);
+    console.log("check if the schema is working", response)
     if (response.success){
       return response.data;
     }
@@ -54,5 +58,23 @@ export async function getProductsByCategoryAPI(id_category: number) {
       message: "Error de conexión con el servidor",
       data: null,
     };
+  }
+}
+export async function getProductIngredientsAPI(id_product: number) {
+  try {
+    const { data } = await api.get(`/products/${id_product}/ingredients`);
+    const response = productIngredientsResponseSchema.safeParse(data);
+
+    if (!response.success) {
+      console.error(response.error);
+      throw new Error("Respuesta inválida del servidor");
+    }
+
+    return response.data.data; 
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    }
+    throw error;
   }
 }

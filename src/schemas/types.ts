@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { boolean, number, z } from "zod";
 import { paginationSchema } from "@/schemas/paginateSchemas.js";
 
 export const productSchema = z.object({
@@ -7,7 +7,8 @@ export const productSchema = z.object({
   description: z.string(),
   image: z.string(),
   active: z.boolean(),
-  id_category: z.number()
+  id_category: z.number(),
+  price: z.string().transform((v) => Number(v))
 });
 
 export const productsList = (
@@ -18,11 +19,12 @@ export const productsList = (
     image: true,
     active: true,
     id_category: true,
+    price:true
   })
 )
 export const getProductSchema = paginationSchema(productsList)
 export type CreateProduct = z.infer<typeof productSchema>;
-export type ProductFormData = Pick<CreateProduct, "name" | "description" | "image" | "active" | "id_category">;
+export type ProductFormData = Pick<CreateProduct, "name" | "description" | "image" | "active" | "id_category" | "price">;
 
 //product category
 export const productCategorySchema = z.object({
@@ -78,3 +80,65 @@ export const ingredientSchemaList=(
 export const getIngredientSchema = paginationSchema(ingredientSchemaList)
 export type Ingredient = z.infer<typeof ingredientSchema>;
 export type IngredientFormData = Pick<Ingredient,"ingredient_name">;
+
+// productIngredient
+
+export const productIngredient = z.object({
+  ingredient_id: z.number(),
+  ingredient_role: z.enum(["extra", "base"]),
+  is_default_selected: z.boolean(),
+  is_removable: z.boolean(),
+  additional_price: z.number(), 
+  is_active: z.boolean(),
+});
+
+export const createProductIngredientsSchema = z.object({
+  product_id: z.number(),
+  ingredients: z.array(productIngredient),
+});
+
+export type ProductIngredient = z.infer<typeof productIngredient>;
+export type ProductIngredientFormData = z.infer<typeof createProductIngredientsSchema>;
+
+// client
+
+export const clientSchema = z.object({
+  id_client : z.number(),
+  client_name: z.string()
+})
+
+export const clientList = (
+  clientSchema.pick({
+    id_client: true,
+    client_name: true,
+  })
+)
+
+export const getClientSchema = paginationSchema(clientList)
+export type Client = z.infer<typeof clientSchema>;
+export type ClientFormData = Pick<Client, "client_name">
+
+
+// Get all the product´s ingredients 
+export const productIngredientItemSchema = z.object({
+  id_ingredient: z.number(),
+  ingredient_name: z.string(),
+  ingredient_role: z.enum(["base", "extra"]),
+  is_default_selected: z.boolean(),
+  is_removable: z.boolean(),
+  additional_price: z.number(),
+  is_active: z.boolean(),
+});
+
+export const productIngredientsResponseSchema = z.object({
+  statusCode: z.number(),
+  data: z.object({
+    id_product: z.number(),
+    name: z.string(),
+    price: z.number(),
+    ingredients: z.array(productIngredientItemSchema)
+  })
+});
+
+export type ProductIngredientItem = z.infer<typeof productIngredientItemSchema>;
+export type ProductIngredientsResponse = z.infer<typeof productIngredientsResponseSchema>;

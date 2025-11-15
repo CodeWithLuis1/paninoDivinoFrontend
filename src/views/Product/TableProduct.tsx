@@ -41,6 +41,7 @@ export default function TableProduct() {
                     <tr>
                       <th className="table-cell-center">Nombre</th>
                       <th>Descripcion</th>
+                      <th>Precio</th>
                       <th>Imagen</th>
                       <th>Estado</th>
                       <th>Categoria</th>
@@ -52,6 +53,7 @@ export default function TableProduct() {
                       <tr key={product.id_product}>
                         <td>{product.name}</td>
                         <td>{product.description}</td>
+                        <td>{product.price}</td>
                         <td>
                           {product.image ? (
                             <img

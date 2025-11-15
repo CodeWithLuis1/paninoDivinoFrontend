@@ -1,41 +1,41 @@
-import {ProductCategoryAPI} from "@/api/ProductCategoriesAPI.js";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import type {ProductCategoryFormData} from "@/schemas/types.js";
+import type {IngredientFormData} from "@/schemas/types.js";
 import { useMutation } from "@tanstack/react-query";
-import CreateProductCategory from "@/components/forms/CreateProductCategory.js";
+import {createIngredientAPI} from "@/api/IngredientsAPI.js"
+import CreateIngredientForm from "@/views/ingredients/IngredientForm.js"
 
-export default function CreateProductCategories() {
+export default function CreateIngredients() {
   const navigate = useNavigate();
-  const initialValues: ProductCategoryFormData = {id_category:0,  name:""};
+  const initialValues: IngredientFormData = {ingredient_name:""};
   const {register,handleSubmit,formState: {errors}} = useForm({defaultValues:initialValues});
   
   const {mutate} = useMutation({
-    mutationFn: ProductCategoryAPI,
+    mutationFn: createIngredientAPI,
     onError: (error)=>{
       toast.error(error.message);
     },
     onSuccess:(data)=>{
       toast.success(data.message);
-      navigate("/categories");
+      navigate("/ingredients");
     }
   })
 
-  const handleForm = async (formData: ProductCategoryFormData) =>{mutate(formData)}
+  const handleForm = async (formData: IngredientFormData) =>{mutate(formData)}
   
   return (
     <div className="min-h-screen bg-[var(--color-bg-primary)] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-[var(--color-primary-dark)] to-[var(--color-primary)] bg-clip-text text-transparent mb-3">
-            Crear Nueva Categoría
+            Crear Nueva Ingrediente
           </h1>
         </div>
 
         <div className="mb-6">
           <Link
-            to="/categories"
+            to="/ingredients"
             className="inline-flex items-center gap-2 px-6 py-3 bg-white text-[var(--color-primary-dark)] font-semibold rounded-xl shadow-md hover:shadow-lg hover:bg-[var(--color-bg-secondary)] transition-all duration-200 border border-[var(--color-border-light)]"
           >
             <svg
@@ -62,18 +62,18 @@ export default function CreateProductCategories() {
             onSubmit={handleSubmit(handleForm)}
             noValidate
           >
-            <CreateProductCategory register={register} errors={errors} />
+            <CreateIngredientForm register={register} errors={errors} />
             <button
               type="submit"
               className="w-full bg-gradient-to-r from-[var(--color-primary-dark)] to-[var(--color-primary)] hover:from-[var(--color-primary-darker)] hover:to-[var(--color-primary-dark)] text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-[var(--shadow-amber)] transform hover:-translate-y-0.5 transition-all duration-200 uppercase tracking-wide"
             >
-              Crear Categoría
+              Crear Ingrediente
             </button>
           </form>
         </div>
 
         <div className="mt-6 text-center text-sm text-[var(--color-text-tertiary)]">
-          <p>Los cambios se aplicarán inmediatamente después crear la Categoría</p>
+          <p>Los cambios se aplicarán inmediatamente después crear el ingrediente</p>
         </div>
       </div>
     </div>

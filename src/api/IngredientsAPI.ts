@@ -20,6 +20,7 @@ export async function getIngredientAPI(page: number = 1) {
     const limit = 10;
     const { data } = await api.get("/ingredients", {params: { page, limit },});
     const response = getIngredientSchema.safeParse(data);
+    console.log("This are the ingredients", response)
       return response.data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {

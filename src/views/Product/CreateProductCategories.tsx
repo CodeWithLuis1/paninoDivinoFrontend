@@ -1,63 +1,41 @@
+import {ProductCategoryAPI} from "@/api/ProductCategoriesAPI.js";
+import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { CreateProductForm } from "@/components/forms/CreateProductForm.js";
-import type { ProductFormData } from "@/schemas/types.js";
+import type {ProductCategoryFormData} from "@/schemas/types.js";
 import { useMutation } from "@tanstack/react-query";
-import { toast } from "react-toastify";
-import { createProductAPI } from "@/api/ProductsAPI.js";
-import { IngredientModal } from "@/components/forms/IngredientModalForm.js";
-import React from "react";
+import CreateProductCategory from "@/views/Product/CreateProductCategoryForm.js";
 
-export default function CreateProductView() {
+export default function CreateProductCategories() {
   const navigate = useNavigate();
-
-  // 🔹 Estado para manejar el modal
-  const [showIngredientModal, setShowIngredientModal] = React.useState(false);
-  const [createdProductId, setCreatedProductId] = React.useState<number | null>(
-    null
-  );
-
-  const initialValues: ProductFormData = {
-    name: "",
-    description: "",
-    image: "",
-    active: true,
-    id_category: 0,
-  };
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm<ProductFormData>({ defaultValues: initialValues });
-
-  const { mutate } = useMutation({
-    mutationFn: createProductAPI,
-    onSuccess: (data) => {
+  const initialValues: ProductCategoryFormData = {id_category:0,  name:""};
+  const {register,handleSubmit,formState: {errors}} = useForm({defaultValues:initialValues});
+  
+  const {mutate} = useMutation({
+    mutationFn: ProductCategoryAPI,
+    onError: (error)=>{
+      toast.error(error.message);
+    },
+    onSuccess:(data)=>{
       toast.success(data.message);
-      setCreatedProductId(data.data.id_product);
-      setShowIngredientModal(true);
-    },
-    onError: (error: any) => {
-      toast.error(error.message || "Error al crear el producto");
-    },
-  });
+      navigate("/categories");
+    }
+  })
 
-  const handleForm = (formData: ProductFormData) => mutate(formData);
-
+  const handleForm = async (formData: ProductCategoryFormData) =>{mutate(formData)}
+  
   return (
     <div className="min-h-screen bg-[var(--color-bg-primary)] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-[var(--color-primary-dark)] to-[var(--color-primary)] bg-clip-text text-transparent mb-3">
-            Crear Nuevo Producto
+            Crear Nueva Categoría
           </h1>
         </div>
 
         <div className="mb-6">
           <Link
-            to="/products"
+            to="/categories"
             className="inline-flex items-center gap-2 px-6 py-3 bg-white text-[var(--color-primary-dark)] font-semibold rounded-xl shadow-md hover:shadow-lg hover:bg-[var(--color-bg-secondary)] transition-all duration-200 border border-[var(--color-border-light)]"
           >
             <svg
@@ -84,36 +62,21 @@ export default function CreateProductView() {
             onSubmit={handleSubmit(handleForm)}
             noValidate
           >
-            <CreateProductForm
-              register={register}
-              errors={errors}
-              setValue={setValue}
-            />
-            <input
+            <CreateProductCategory register={register} errors={errors} />
+            <button
               type="submit"
-              value="Crear Producto"
               className="w-full bg-gradient-to-r from-[var(--color-primary-dark)] to-[var(--color-primary)] hover:from-[var(--color-primary-darker)] hover:to-[var(--color-primary-dark)] text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-[var(--shadow-amber)] transform hover:-translate-y-0.5 transition-all duration-200 uppercase tracking-wide"
-            />
+            >
+              Crear Categoría
+            </button>
           </form>
         </div>
 
         <div className="mt-6 text-center text-sm text-[var(--color-text-tertiary)]">
-          <p>
-            Los cambios se aplicarán inmediatamente después de crear el producto
-          </p>
+          <p>Los cambios se aplicarán inmediatamente después crear la Categoría</p>
         </div>
       </div>
-
-      {/* 🔹 Modal para agregar ingredientes
-      {showIngredientModal && createdProductId && (
-        <IngredientModal
-          idProduct={createdProductId}
-          onClose={() => {
-            setShowIngredientModal(false);
-            navigate("/products");
-          }}
-        />
-      )} */}
     </div>
   );
 }
+

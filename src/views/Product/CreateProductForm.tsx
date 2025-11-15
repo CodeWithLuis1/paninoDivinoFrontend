@@ -1,7 +1,7 @@
-import { ErrorMessage } from "../utilities-components/ErrorMessage.js";
+import { ErrorMessage } from "../../components/utilities-components/ErrorMessage.js";
 import type { UseFormRegister, FieldErrors,UseFormSetValue  } from "react-hook-form";
 import type { ProductFormData } from "@/schemas/types.js";
-import {UploadImages} from "../utilities-components/UploadImages.js";
+import {UploadImages} from "../../components/utilities-components/UploadImages.js";
 import { useQuery } from "@tanstack/react-query";
 import { getCategoriesAPI } from "@/api/ProductCategoriesAPI.js";
 
@@ -50,6 +50,23 @@ export function CreateProductForm({errors,register,setValue }: CreateProductForm
         />
         {errors.description && (
           <ErrorMessage>{errors.description.message}</ErrorMessage>
+        )}
+      </div>
+      <div className="mb-5 space-y-3">
+        <label htmlFor="price" className="text-sm uppercase font-bold">
+          Precio del producto
+        </label>
+        <input
+          id="price"
+          className="w-full p-3  border border-gray-200"
+          type="number"
+          placeholder="Eje. Q35"
+          {...register("price", {
+            required: "El precio es obligatorio",
+          })}
+        />
+        {errors.price && (
+          <ErrorMessage>{errors.price.message}</ErrorMessage>
         )}
       </div>
     <div className="mb-5">

@@ -29,3 +29,15 @@ export async function getOrderAPI() {
     throw error;
   }
 }
+
+export async function addOrderItemAPI(id_order: number, payload: any) {
+  try {
+    const { data } = await api.post(`/orders/${id_order}/items`, payload);
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message || "Error al agregar producto al pedido");
+    }
+    throw error;
+  }
+}
